@@ -1,0 +1,79 @@
+namespace ConsoleMenuExample
+{
+    class Program
+    {
+        // Методы для каждого пункта меню
+        static void NewGame()
+        {
+            Console.WriteLine("Начата новая игра.");
+        }
+
+        static void LoadGame()
+        {
+            Console.WriteLine("Игра загружена.");
+        }
+
+        static void Rules()
+        {
+            Console.WriteLine("Правила игры.");
+        }
+
+        static void AboutAuthor()
+        {
+            Console.WriteLine("Информация об авторе.");
+        }
+
+        static void Exit()
+        {
+            Console.WriteLine("Выход из программы.");
+        }
+
+        // Делегат для методов без параметров и возвращаемого значения
+        delegate void MenuAction();
+
+        static void Main()
+        {
+            // Массив методов-делегатов, соответствующих пунктам меню
+            MenuAction[] actions =
+            {
+                NewGame,
+                LoadGame,
+                Rules,
+                AboutAuthor,
+                Exit
+            };
+
+            int choice;
+
+            do
+            {
+                // Выводим меню
+                Console.WriteLine("Меню:");
+                Console.WriteLine("1 - новая игра");
+                Console.WriteLine("2 - загрузить игру");
+                Console.WriteLine("3 - правила");
+                Console.WriteLine("4 - об авторе");
+                Console.WriteLine("0 - выход");
+
+                // Запрашиваем у пользователя выбор
+                Console.Write("Выберите пункт меню: ");
+                while (!int.TryParse(Console.ReadLine(), out choice) || choice < 0 || choice > 4)
+                {
+                    Console.WriteLine("Некорректный ввод. Пожалуйста, выберите пункт меню от 0 до 4.");
+                    Console.Write("Выберите пункт меню: ");
+                }
+
+                // Если выбран корректный пункт меню, вызываем соответствующий метод с использованием делегата
+                if (choice > 0 && choice <= 4)
+                {
+                    actions[choice - 1](); // Индекс в массиве actions соответствует choice - 1
+                    Console.WriteLine(); // Пустая строка для отделения вывода различных вызовов методов
+                }
+
+            } while (choice != 0);
+
+            // Выводим сообщение о завершении программы
+            Console.WriteLine("Программа завершена.");
+        }
+    }
+}
